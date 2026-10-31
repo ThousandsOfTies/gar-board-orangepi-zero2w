@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "id": "orangepi-zero2w",
+  "name": "Orange Pi Zero 2W",
+  "soc": "Allwinner H618",
+  "profiles": {
+    "armbian-debian13": "profiles/armbian-debian13.json"
+  },
+  "documentation": "README.md"
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "board": "orangepi-zero2w",
+  "os": "Armbian / Debian 13",
+  "architecture": "aarch64",
+  "abi": "gnu",
+  "libc": "glibc",
+  "identity": {
+    "architecture": "aarch64",
+    "release_file": "/etc/armbian-release",
+    "release_marker": "BOARD=orangepizero2w"
+  },
+  "toolchain": {
+    "cc": "aarch64-linux-gnu-gcc",
+    "cxx": "aarch64-linux-gnu-g++",
+    "readelf": "aarch64-linux-gnu-readelf"
+  },
+  "startup": {
+    "init": "systemd",
+    "after": "systemd-udev-trigger.service",
+    "device_wait_seconds": 15
+  },
+  "gpio": [
+    {
+      "device": "/dev/gpiochip1",
+      "label": "300b000.pinctrl",
+      "lines": [
+        228,
+        262,
+        256,
+        271,
+        272
+      ],
+      "line_pins": {
+        "228": 18,
+        "256": 29,
+        "262": 22,
+        "271": 31,
+        "272": 37
+      },
+      "voltage_v": 3.3
+    }
+  ],
+  "spi": [
+    {
+      "device": "/dev/spidev1.0",
+      "bus": 1,
+      "chip_select": 0,
+      "modes": [
+        0
+      ],
+      "max_speed_hz": 24000000,
+      "pins": {
+        "cs": 24,
+        "mosi": 19,
+        "sclk": 23
+      },
+      "controller": "5011000.spi"
+    }
+  ],
+  "preparation": {
+    "kind": "armbian-overlay",
+    "overlay": "assets/header-spi1.dts",
+    "name": "gar-orangepi-zero2w-spi1",
+    "boot_config": "/boot/armbianEnv.txt"
+  },
+  "verification": {
+    "date": "2026-10-29",
+    "scope": "Verified subset of header resources used during bring-up. This is not a complete 40-pin inventory."
+  }
+}
