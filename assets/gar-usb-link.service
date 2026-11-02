@@ -1,0 +1,15 @@
+[Unit]
+Description=Orange Pi USB RNDIS network and serial console
+After=systemd-modules-load.service
+Before=serial-getty@ttyGS0.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/gar-usb-link start
+ExecStop=/usr/local/sbin/gar-usb-link stop
+TimeoutStartSec=30
+TimeoutStopSec=15
+
+[Install]
+WantedBy=multi-user.target
