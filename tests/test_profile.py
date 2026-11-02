@@ -22,4 +22,16 @@ class BoardProfiles(unittest.TestCase):
             overlay = profile['preparation'].get('overlay')
             if overlay: self.assertTrue((ROOT / overlay).is_file())
 
+    def test_optional_i2c_routing_does_not_claim_existing_gpio_or_spi_pins(self):
+        board=json.loads((ROOT/'board.json').read_text())
+        for relative in board['profiles'].values():
+            profile=json.loads((ROOT/relative).read_text())
+            used={pin for gpio in profile['gpio'] for pin in gpio['line_pins'].values()}
+            used.update(pin for spi in profile['spi'] for pin in spi['pins'].values())
+            for bus in profile.get('i2c',[]):
+                self.assertTrue(used.isdisjoint(bus['pins'].values()))
+                self.assertEqual(bus['device'],f"/dev/i2c-{bus['bus']}")
+            for resource in profile['preparation'].get('resource_overlays',[]):
+                self.assertTrue((ROOT/resource['overlay']).is_file())
+
 if __name__ == '__main__': unittest.main()
