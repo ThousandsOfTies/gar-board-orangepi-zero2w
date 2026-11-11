@@ -1,0 +1,29 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "allwinner,sun50i-h616";
+    fragment@0 {
+        target-path = "/aliases";
+        __overlay__ { i2c1 = "/soc/i2c@5002400"; };
+    };
+    fragment@1 {
+        target = <&pio>;
+        __overlay__ {
+            gar_header_i2c1: gar-header-i2c1-pins {
+                pins = "PI7", "PI8";
+                function = "i2c1";
+                bias-pull-up;
+            };
+        };
+    };
+    fragment@2 {
+        target-path = "/soc/i2c@5002400";
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&gar_header_i2c1>;
+            clock-frequency = <100000>;
+        };
+    };
+};
