@@ -63,10 +63,39 @@
     "kind": "armbian-overlay",
     "overlay": "assets/header-spi1.dts",
     "name": "gar-orangepi-zero2w-spi1",
-    "boot_config": "/boot/armbianEnv.txt"
+    "boot_config": "/boot/armbianEnv.txt",
+    "resource_overlays": [
+      {
+        "device": "/dev/i2c-1",
+        "overlay": "assets/header-i2c1.dts",
+        "name": "gar-orangepi-zero2w-i2c1"
+      }
+    ]
   },
   "verification": {
     "date": "2026-10-29",
-    "scope": "Verified subset of header resources used during bring-up. This is not a complete 40-pin inventory."
-  }
+    "scope": "Verified subset of header resources used during bring-up. This is not a complete 40-pin inventory.",
+    "i2c_scope": "Documented I2C1 routing and explicit alias, not newly verified on a physical board. Pinmux and controller follow upstream H616 Linux sources; existing LCD and encoder pins are disjoint.",
+    "i2c_sources": [
+      "https://github.com/torvalds/linux/blob/master/drivers/pinctrl/sunxi/pinctrl-sun50i-h616.c",
+      "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/allwinner/sun50i-h616.dtsi"
+    ]
+  },
+  "i2c": [
+    {
+      "device": "/dev/i2c-1",
+      "bus": 1,
+      "pins": {
+        "sda": 3,
+        "scl": 5
+      },
+      "routing": {
+        "sda": "PI8",
+        "scl": "PI7"
+      },
+      "controller": "5002400.i2c",
+      "max_speed_hz": 100000,
+      "voltage_v": 3.3
+    }
+  ]
 }
